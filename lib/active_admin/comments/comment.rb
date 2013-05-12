@@ -9,7 +9,7 @@ module ActiveAdmin
     belongs_to :resource, :polymorphic => true
     belongs_to :author,   :polymorphic => true
 
-    attr_accessible :resource, :resource_id, :resource_type, :body, :namespace
+    #attr_accessible :resource, :resource_id, :resource_type, :body, :namespace
 
     validates_presence_of :body, :namespace, :resource
 
@@ -44,8 +44,14 @@ module ActiveAdmin
     def self.ransackable_associations(auth_obj)
       [] # removes resource and author polymorphic associations
     end
+    
+    private
+    
+    def comment_params
+      params.require(:resource).permit(:resource_id, :resource_type, :body, :namespace)
+    end
 
-  end
+end
 
 end
 
